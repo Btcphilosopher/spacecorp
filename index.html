@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Aurum: Asteroid Mining & Monetary Revolution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid #c9a227;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(201,162,39,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #c9a227;
+            text-shadow: 0 0 20px rgba(201,162,39,0.5);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tagline {
+            font-size: 1.4em;
+            color: #a0a0a0;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #c9a227;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(201,162,39,0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            color: #c9a227;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            color: #b0b0b0;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        section {
+            padding: 60px 20px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #c9a227;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #e0a829;
+            margin: 30px 0 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #c9a227 0%, #e0a829 100%);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            width: 45%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid #c9a227;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: #c9a227;
+            border-radius: 50%;
+            border: 4px solid #0a0a0a;
+            z-index: 2;
+        }
+
+        .year-label {
+            font-size: 2em;
+            color: #c9a227;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #c9a227;
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateX(10px);
+            border-left-width: 8px;
+        }
+
+        .resource-title {
+            font-size: 1.5em;
+            color: #c9a227;
+            margin-bottom: 15px;
+        }
+
+        .resource-value {
+            font-size: 1.2em;
+            color: #4CAF50;
+            margin: 10px 0;
+        }
+
+        .financial-table {
+            width: 100%;
+            margin: 40px 0;
+            border-collapse: collapse;
+            background: #1a1a2e;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .financial-table th {
+            background: linear-gradient(135deg, #c9a227 0%, #e0a829 100%);
+            color: #0a0a0a;
+            padding: 20px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .financial-table td {
+            padding: 20px;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .financial-table tr:hover {
+            background: #16213e;
+        }
+
+        .strategy-box {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #c9a227;
+            margin: 30px 0;
+        }
+
+        .risk-meter {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .risk-label {
+            flex: 1;
+            color: #b0b0b0;
+        }
+
+        .risk-bar {
+            flex: 2;
+            height: 20px;
+            background: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 20px;
+        }
+
+        .risk-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50 0%, #FFC107 50%, #F44336 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .risk-value {
+            color: #c9a227;
+            min-width: 50px;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #c9a227 0%, #e0a829 100%);
+        }
+
+        .cta-section h2 {
+            color: #0a0a0a;
+            font-size: 3em;
+        }
+
+        .cta-text {
+            color: #1a1a1a;
+            font-size: 1.3em;
+            margin: 20px 0 40px;
+        }
+
+        .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .key-point {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .key-point-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            text-align: center;
+            color: #666;
+        }
+
+        .accent-text {
+            color: #c9a227;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .timeline::before { left: 20px; }
+            .timeline-item { flex-direction: column !important; }
+            .timeline-content { width: 100%; margin-left: 40px !important; }
+            .timeline-marker { left: 20px; transform: none; }
+            .hero-stats { grid-template-columns: 1fr; }
+        }
+
+        .phase-header {
+            background: linear-gradient(90deg, #c9a227 0%, transparent 100%);
+            padding: 15px 30px;
+            margin: 30px 0 20px;
+            border-radius: 5px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .milestone-list {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .milestone-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .milestone-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #c9a227;
+            font-weight: bold;
+        }
+
+        .value-highlight {
+            background: linear-gradient(90deg, rgba(201,162,39,0.2) 0%, transparent 100%);
+            padding: 3px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>PROJECT AURUM</h1>
+            <p class="tagline">Asteroid Mining & Global Monetary Restructuring</p>
+            <p class="tagline" style="margin-top: 10px; font-size: 1.1em;">Accelerated 5-Year Timeline to Market Dominance</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span class="stat-number">5 Years</span>
+                <span class="stat-label">To First Production</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">£50B</span>
+                <span class="stat-label">Total Investment</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">£250B+</span>
+                <span class="stat-label">Asteroid Value (First Target)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">∞</span>
+                <span class="stat-label">Monetary System Control</span>
+            </div>
+        </div>
+
+        <section id="executive-summary">
+            <h2>Executive Summary</h2>
+            <div class="strategy-box">
+                <p style="font-size: 1.2em; margin-bottom: 20px;">
+                    <strong>The Opportunity:</strong> Through aggressive parallel development and massive capital deployment, 
+                    we compress a traditional 15-year asteroid mining timeline into <span class="accent-text">5 years</span>, 
+                    achieving first production while competitors are still in design phases.
+                </p>
+                <p style="font-size: 1.1em; margin-bottom: 20px;">
+                    By controlling the introduction of space-mined precious metals and establishing ourselves as the 
+                    de facto supplier to central banks, we don't just mine asteroids—we <span class="accent-text">restructure 
+                    global monetary systems</span> and position ourselves as the central bank of a new gold-backed order.
+                </p>
+                <div class="key-points">
+                    <div class="key-point">
+                        <div class="key-point-icon">🚀</div>
+                        <strong>Parallel Development</strong><br>
+                        Run 8 mission tracks simultaneously
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">⚡</div>
+                        <strong>No Compromises</strong><br>
+                        Pay 5x for best talent & fastest execution
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">🎯</div>
+                        <strong>Single Target Focus</strong><br>
+                        One perfect asteroid, maximum return
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">💰</div>
+                        <strong>Monetary Revolution</strong><br>
+                        Become the gold supplier to central banks
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="asteroid-resources">
+            <h2>What's Inside an Asteroid?</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+                A single 200-meter metallic asteroid contains more precious metals than humanity has mined in 5,000 years
+            </p>
+            
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-title">💎 Platinum-Group Metals</div>
+                    <p><strong>Concentration:</strong> 20-100 g/ton (10-20x Earth grades)</p>
+                    <p><strong>In 100M ton asteroid:</strong></p>
+                    <div class="resource-value">• Platinum: 5,000 tons (£150-200B)</div>
+                    <div class="resource-value">• Palladium: 3,000 tons (£90-120B)</div>
+                    <div class="resource-value">• Rhodium: 1,500 tons (£75-150B)</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>More platinum than all South African mines will produce in 50 years</em>
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🏆 Gold & Silver</div>
+                    <p><strong>Concentration:</strong> 5-20 g/ton gold</p>
+                    <p><strong>In 100M ton asteroid:</strong></p>
+                    <div class="resource-value">• Gold: 1,000 tons (£40-60B)</div>
+                    <div class="resource-value">• Silver: 2,000 tons (£1.5-2B)</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>More gold than Fort Knox, all Swiss banks, and the entire jewelry industry combined</em>
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">⚙️ Strategic Industrial Metals</div>
+                    <p><strong>Critical for modern technology:</strong></p>
+                    <div class="resource-value">• Nickel: 10M tons (£150-250B)</div>
+                    <div class="resource-value">• Cobalt: 1M tons (£30-50B)</div>
+                    <div class="resource-value">• Copper: 3M tons (£30-40B)</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>Enough battery metals to power 500 million electric vehicles</em>
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🔬 Rare Technology Metals</div>
+                    <p><strong>Semiconductor & aerospace essentials:</strong></p>
+                    <div class="resource-value">• Germanium: 5,000 tons</div>
+                    <div class="resource-value">• Rhenium: 100 tons (£200-400M)</div>
+                    <div class="resource-value">• Gallium: 2,000 tons</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>Currently monopolized by China—space mining provides supply independence</em>
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🏗️ Structural Metals</div>
+                    <p><strong>Building material for space economy:</strong></p>
+                    <div class="resource-value">• Iron: 70-80M tons</div>
+                    <div class="resource-value">• Titanium: 500K tons</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>Free construction material already in orbit—worth trillions for space infrastructure</em>
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">💧 Volatiles (Future Value)</div>
+                    <p><strong>From carbonaceous asteroids:</strong></p>
+                    <div class="resource-value">• Water ice: 10-20% by mass</div>
+                    <div class="resource-value">• Organic compounds</div>
+                    <p style="margin-top: 15px; color: #a0a0a0;">
+                        <em>Rocket fuel & life support for deep space—enables the entire space economy</em>
+                    </p>
+                </div>
+            </div>
+
+            <div class="strategy-box" style="margin-top: 50px;">
+                <h3 style="color: #c9a227; margin-top: 0;">First Target: Asteroid "2011 UW-158 Class"</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div>
+                        <strong>Size:</strong> 300m diameter<br>
+                        <strong>Mass:</strong> 100 million tons
+                    </div>
+                    <div>
+                        <strong>Type:</strong> M-type (metallic)<br>
+                        <strong>Orbit:</strong> Delta-v < 5 km/s
+                    </div>
+                    <div>
+                        <strong>Composition:</strong> 75% iron-nickel<br>
+                        <strong>PGMs:</strong> 3-5% by mass
+                    </div>
+                    <div>
+                        <strong>Total Value:</strong> <span class="value-highlight">£260-410 billion</span><br>
+                        <strong>ROI:</strong> 5-8x investment
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline">
+            <h2>5-Year Accelerated Timeline</h2>
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 50px; color: #a0a0a0;">
+                Traditional timeline: 15 years. Our timeline: <span class="accent-text">5 years</span>.<br>
+                How? Unlimited capital, parallel development, no bureaucracy, best talent at any cost.
+            </p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Year 1: Foundation Blitz</div>
+                        <p style="margin-bottom: 15px;"><strong>Investment: £8 billion</strong></p>
+                        
+                        <div class="phase-header">Q1-Q2: Talent Acquisition</div>
+                        <ul class="milestone-list">
+                            <li>Recruit 500 engineers from SpaceX, Blue Origin, NASA (offer 5x salary + equity)</li>
+                            <li>Hire entire JPL asteroid mission team</li>
+                            <li>Poach robotics experts from Boston Dynamics, ABB, mining automation firms</li>
+                            <li>Establish 3 R&D centers: California (spacecraft), Colorado (mining tech), Luxembourg (legal/finance)</li>
+                        </ul>
+
+                        <div class="phase-header">Q2-Q4: Parallel Mission Development</div>
+                        <ul class="milestone-list">
+                            <li><strong>Track 1:</strong> Survey satellites (contract with Rocket Lab for 5 rapid launches)</li>
+                            <li><strong>Track 2:</strong> Capture spacecraft design (2 competing teams, best design wins)</li>
+                            <li><strong>Track 3:</strong> Processing tech (ground testing with purchased meteorites)</li>
+                            <li><strong>Track 4:</strong> Orbital refinery design (partner with ISS contractors)</li>
+                        </ul>
+
+                        <div class="phase-header">Legal & Political</div>
+                        <ul class="milestone-list">
+                            <li>Secure asteroid mining rights in Luxembourg, UAE</li>
+                            <li>Fund 50+ legal scholars producing favorable space law papers</li>
+                            <li>Begin terrestrial gold accumulation (buy 500 tons quietly via shell companies)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Year 2: Survey & Selection</div>
+                        <p style="margin-bottom: 15px;"><strong>Investment: £10 billion</strong></p>
+                        
+                        <div class="phase-header">Q1-Q2: Target Identification</div>
+                        <ul class="milestone-list">
+                            <li>5 survey satellites operational, mapping 2,000+ near-Earth asteroids</li>
+                            <li>Spectroscopic analysis identifies 50 high-value metallic targets</li>
+                            <li>Select THE ONE: 300m M-type, accessible orbit, £250B+ value</li>
+                            <li>File legal claim (coordinate with friendly governments)</li>
+                        </ul>
+
+                        <div class="phase-header">Q2-Q4: Infrastructure Build</div>
+                        <ul class="milestone-list">
+                            <li>Construct 2 private spaceports (Ecuador for equatorial, Norway for polar)</li>
+                            <li>Build mission control center (1,000+ person capacity)</li>
+                            <li>Establish ground processing facility for returned samples</li>
+                            <li>Begin construction of 3 capture spacecraft (parallel manufacturing)</li>
+                        </ul>
+
+                        <div class="phase-header">Tech Development</div>
+                        <ul class="milestone-list">
+                            <li>Complete robotic mining system prototypes (test in Nevada desert)</li>
+                            <li>Develop autonomous navigation AI (simulate 10,000 capture scenarios)</li>
+                            <li>Design modular orbital refinery (can be assembled in lunar orbit)</li>
+                            <li>Partner with SpaceX for dedicated Starship launches (book 10 launch windows)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Year 3: Launch & Capture</div>
+                        <p style="margin-bottom: 15px;"><strong>Investment: £15 billion</strong></p>
+                        
+                        <div class="phase-header">Q1: Mission Launch</div>
+                        <ul class="milestone-list">
+                            <li><strong>Primary spacecraft:</strong> Launch on Starship Heavy (redundant systems, 18-month mission duration)</li>
+                            <li><strong>Backup spacecraft:</strong> Launch 2 months later (insurance against primary failure)</li>
+                            <li><strong>Support constellation:</strong> 4 relay satellites for constant communication</li>
+                            <li>Public announcement: massive media campaign, position as "new space race"</li>
+                        </ul>
+
+                        <div class="phase-header">Q2-Q4: Transit & Approach</div>
+                        <ul class="milestone-list">
+                            <li>9-month transit to target asteroid</li>
+                            <li>Continuous orbital refinement using ion drives</li>
+                            <li>Deploy survey drones for detailed surface mapping</li>
+                            <li>Identify optimal capture points (structural analysis via ground-penetrating radar)</li>
+                            <li>Meanwhile: Launch orbital refinery components (10 Starship missions to lunar orbit)</li>
+                        </ul>
+
+                        <div class="phase-header">Financial Positioning</div>
+                        <ul class="milestone-list">
+                            <li>Acquire additional 1,000 tons terrestrial gold (total: 1,500 tons, £60B invested)</li>
+                            <li>Buy stakes in 5 major gold mining companies (Barrick, Newmont, etc.)</li>
+                            <li>Begin conversations with smaller central banks (pitch future supply agreements)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Year 4: Capture & Processing</div>
+                        <p style="margin-bottom: 15px;"><strong>Investment: £12 billion</strong></p>
+                        
+                        <div class="phase-header">Q1: The Capture</div>
+                        <ul class="milestone-list">
+                            <li><strong>Month 1:</strong> Soft landing on asteroid surface, anchor deployment</li>
+                            <li><strong>Month 2-3:</strong> Attach 6 ion drive tugs, begin slow acceleration (0.001 m/s²)</li>
+                            <li><strong>Historic moment:</strong> Live stream of capture—billions watching worldwide</li>
+                            <li>Course correction toward lunar orbit (12-month transit)</li>
+                        </ul>
+
+                        <div class="phase-header">Q2-Q3: Orbital Refinery Assembly</div>
+                        <ul class="milestone-list">
+                            <li>Complete assembly of processing facility in lunar orbit (500m structure)</li>
+                            <li>Solar furnace arrays deployed (1 km² collection area)</li>
+                            <li>Robotic processing arms, magnetic separators, storage modules operational</li>
+                            <li>First test: process samples from earlier missions (prove technology works)</li>
+                        </ul>
+
+                        <div class="phase-header">Q4: First Processing</div>
+                        <ul class="milestone-list">
+                            <li>Asteroid arrives lunar orbit (Dec Year 4)</li>
+                            <li>Begin extraction: 50,000 tons/month processing capacity</li>
+                            <li>First batch: 500 tons processed → 25 tons platinum, 5 tons gold, 10 tons other PGMs</li>
+                            <li><strong>First sample return to Earth:</strong> 100 kg gold capsule lands in Nevada (controlled media event)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Year 5: Market Entry & Domination</div>
+                        <p style="margin-bottom: 15px;"><strong>Investment: £5 billion</strong></p>
+                        
+                        <div class="phase-header">Q1-Q2: Production Ramp</div>
+                        <ul class="milestone-list">
+                            <li>Processing 200,000 tons/month (2.4M tons/year from 100M ton asteroid)</li>
+                            <li><strong>Annual output:</strong> 1,200 tons PGMs, 240 tons gold, 120 tons strategic metals</li>
+                            <li>Total production by end of Year 5: 2,000 tons platinum-group metals, 400 tons gold</li>
+                            <li>Establish secure storage: lunar vault + Earth vaults (Swiss, Singapore, Dubai)</li>
+                        </ul>
+
+                        <div class="phase-header">Market Entry Strategy</div>
+                        <ul class="milestone-list">
+                            <li><strong>Phase 1 - PGMs:</strong> Supply agreements with automotive (Toyota, VW, GM) for catalytic converters</li>
+                            <li><strong>Phase 2 - Strategic metals:</strong> Battery manufacturers (CATL, LG, Panasonic) for nickel/cobalt</li>
+                            <li><strong>Phase 3 - Gold (controlled):</strong> Release only 50 tons in Year 5 (test market absorption)</li>
+                            <li>Pricing: Maintain 80-90% of terrestrial prices (don't crash market yet)</li>
+                            <li><strong>Revenue Year 5:</strong> £40-60 billion (conservative release strategy)</li>
+                        </ul>
+
+                        <div class="phase-header">The Monetary Play Begins</div>
+                        <ul class="milestone-list">
+                            <li><strong>Announcement:</strong> "New Gold Standard Initiative" - white paper from Nobel economists we funded</li>
+                            <li><strong>First clients:</strong> Approach 5 small nations with currency crises (offer gold backing)</li>
+                            <li><strong>Central bank outreach:</strong> Private meetings with Fed, ECB, BoE governors—offer multi-decade supply contracts</li>
+                            <li><strong>Launch SpaceGold Reserve:</strong> Digital gold-backed token (1 token = 1 gram space gold)</li>
+                            <li><strong>Position:</strong> "We control future gold supply. Work with us, or watch your currency lose credibility."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="financial">
+            <h2>Financial Projections</h2>
+            
+            <h3>Capital Deployment</h3>
+            <table class="financial-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th>Investment</th>
+                        <th>Cumulative</th>
+                        <th>Key Milestones</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Year 1</strong></td>
+                        <td>£8B</td>
+                        <td>£8B</td>
+                        <td>Foundation, talent, tech development</td>
+                        <td>£0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Year 2</strong></td>
+                        <td>£10B</td>
+                        <td>£18B</td>
+                        <td>Survey, target selection, infrastructure</td>
+                        <td>£0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Year 3</strong></td>
+                        <td>£15B</td>
+                        <td>£33B</td>
+                        <td>Launch, capture mission, orbital refinery</td>
+                        <td>£0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Year 4</strong></td>
+                        <td>£12B</td>
+                        <td>£45B</td>
+                        <td>Asteroid arrival, first processing</td>
+                        <td>£2-3B (samples)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Year 5</strong></td>
+                        <td>£5B</td>
+                        <td>£50B</td>
+                        <td>Full production, market entry</td>
+                        <td>£40-60B</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 60px;">Production & Revenue Trajectory</h3>
+            <div class="strategy-box">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                    <div>
+                        <h4 style="color: #c9a227; margin-bottom: 15px;">Year 5 Output</h4>
+                        <p><strong>Platinum-group metals:</strong> 2,000 tons</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £60-80 billion</p>
+                        <p><strong>Gold:</strong> 400 tons (release only 50 tons)</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £2-2.5 billion sold</p>
+                        <p><strong>Strategic metals:</strong> 120 tons</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £3-5 billion</p>
+                        <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #c9a227;">
+                            <strong>Total Year 5 Revenue:</strong><br>
+                            <span style="font-size: 1.5em; color: #c9a227;">£65-87 billion</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #c9a227; margin-bottom: 15px;">Year 10 Projection</h4>
+                        <p><strong>Production capacity:</strong> 3 asteroids simultaneously</p>
+                        <p><strong>Annual PGM output:</strong> 5,000 tons</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £150-200 billion</p>
+                        <p><strong>Gold output:</strong> 1,000 tons/year (release 300 tons)</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £12-18 billion</p>
+                        <p><strong>Strategic metals:</strong> 300 tons</p>
+                        <p style="color: #4CAF50; font-size: 1.2em; margin: 10px 0;">Value: £10-15 billion</p>
+                        <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #c9a227;">
+                            <strong>Total Year 10 Revenue:</strong><br>
+                            <span style="font-size: 1.5em; color: #c9a227;">£172-233 billion</span>
+                        </p>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #c9a227; margin-bottom: 15px;">Year 15+ (Monetary Era)</h4>
+                        <p><strong>Direct mining revenue:</strong> £200-300B/year</p>
+                        <p><strong>Monetary system fees:</strong> £50-100B/year</p>
+                        <p style="margin: 10px 0; padding: 10px; background: rgba(201,162,39,0.2); border-radius: 5px;">
+                            <strong>Gold remonetization premium:</strong><br>
+                            Terrestrial holdings (2,000+ tons) appreciate 5-10x
+                        </p>
+                        <p style="margin: 10px 0; padding: 10px; background: rgba(201,162,39,0.2); border-radius: 5px;">
+                            <strong>Central bank contracts:</strong><br>
+                            Supply 30-50 nations with monetary gold
+                        </p>
+                        <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #c9a227;">
+                            <strong>Enterprise Value:</strong><br>
+                            <span style="font-size: 1.5em; color: #c9a227;">£2-8 trillion</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 60px;">Return on Investment</h3>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-title">Conservative Case</div>
+                    <p style="margin: 20px 0;"><strong>Assumptions:</strong> PGM prices drop 30%, gold stays commodity, no monetary premium</p>
+                    <div class="resource-value">Year 10 Revenue: £100-130B/year</div>
+                    <div class="resource-value">EBITDA Margin: 60%</div>
+                    <div class="resource-value">Enterprise Value (10x): £600-780B</div>
+                    <p style="margin-top: 20px; font-size: 1.3em; color: #4CAF50;">
+                        <strong>ROI: 12-16x</strong> (£50B → £600-780B)
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Base Case</div>
+                    <p style="margin: 20px 0;"><strong>Assumptions:</strong> Maintain pricing power through controlled release, partial gold remonetization</p>
+                    <div class="resource-value">Year 10 Revenue: £200-250B/year</div>
+                    <div class="resource-value">EBITDA Margin: 65-70%</div>
+                    <div class="resource-value">Enterprise Value (15x): £2-2.6T</div>
+                    <p style="margin-top: 20px; font-size: 1.3em; color: #4CAF50;">
+                        <strong>ROI: 40-52x</strong> (£50B → £2-2.6T)
+                    </p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">Bull Case</div>
+                    <p style="margin: 20px 0;"><strong>Assumptions:</strong> Full monetary restructuring, we become de facto central bank of gold standard</p>
+                    <div class="resource-value">Year 10 Revenue: £300-400B/year</div>
+                    <div class="resource-value">Gold holdings: £200-500B</div>
+                    <div class="resource-value">Monetary influence: Priceless</div>
+                    <p style="margin-top: 20px; font-size: 1.3em; color: #4CAF50;">
+                        <strong>ROI: 100-160x</strong> (£50B → £5-8T)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="monetary-strategy">
+            <h2>The Monetary Restructuring Strategy</h2>
+            
+            <div class="strategy-box">
+                <h3 style="margin-top: 0;">Why This Works: The Perfect Storm</h3>
+                <div class="key-points">
+                    <div class="key-point">
+                        <div class="key-point-icon">📉</div>
+                        <strong>Fiat Fatigue</strong><br>
+                        50+ years of pure fiat experiment, growing inflation concerns, loss of monetary confidence
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">⛓️</div>
+                        <strong>Crypto Failed</strong><br>
+                        Too volatile, environmental concerns, couldn't replace fiat—but proved demand for alternative
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">🌍</div>
+                        <strong>Geopolitical Instability</strong><br>
+                        Nations seeking alternatives to dollar dominance, currency wars, debt crises
+                    </div>
+                    <div class="key-point">
+                        <div class="key-point-icon">🎯</div>
+                        <strong>We Solve the Paradox</strong><br>
+                        Gold's stability + fiat's flexibility = we supply the gold, removing scarcity constraint
+                    </div>
+                </div>
+            </div>
+
+            <h3>Three-Phase Remonetization</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Phase 1: Accumulation (Years 1-5)</div>
+                        
+                        <p style="margin-bottom: 20px;"><strong>The Silent Strategy</strong></p>
+                        
+                        <ul class="milestone-list">
+                            <li><strong>Buy terrestrial gold:</strong> Accumulate 2,000-3,000 tons through shell companies (£80-120B invested)</li>
+                            <li><strong>Acquire mining companies:</strong> Buy 30-40% stakes in Barrick, Newmont, Polyus (£20-30B)</li>
+                            <li><strong>Strategic positioning:</strong> Work with gold-friendly nations (Russia, China, India) on supply agreements</li>
+                            <li><strong>Narrative building:</strong> Fund 100+ economists, think tanks producing "return to sound money" research</li>
+                        </ul>
+
+                        <p style="margin-top: 20px; padding: 15px; background: rgba(201,162,39,0.1); border-left: 4px solid #c9a227;">
+                            <strong>Key Insight:</strong> While developing space capability, we're also cornering terrestrial gold market. 
+                            When space gold validates the metal's importance, our Earth holdings explode in value.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Phase 2: The Proposal (Years 5-8)</div>
+                        
+                        <p style="margin-bottom: 20px;"><strong>The New Bretton Woods Initiative</strong></p>
+                        
+                        <div class="phase-header">Core Proposition to Central Banks</div>
+                        <ul class="milestone-list">
+                            <li><strong>Hybrid system:</strong> 30-40% gold backing (not full 100%—avoids deflation)</li>
+                            <li><strong>We guarantee supply:</strong> Multi-decade contracts, 500-1,000 tons/year to central banks</li>
+                            <li><strong>Stable pricing:</strong> We don't flood market—controlled release maintains value</li>
+                            <li><strong>Credibility premium:</strong> Gold-backed currencies trade at premium vs. pure fiat</li>
+                        </ul>
+
+                        <div class="phase-header">First Adopters</div>
+                        <ul class="milestone-list">
+                            <li><strong>Crisis countries:</strong> Nations with hyperinflation, currency collapse (Argentina, Turkey, Lebanon)</li>
+                            <li><strong>The pitch:</strong> "We'll back your new currency with gold—instant credibility, zero cost to you"</li>
+                            <li><strong>Success metrics:</strong> Inflation drops 60-80%, trade increases, investment flows in</li>
+                            <li><strong>Demonstration effect:</strong> Other nations watch and want in</li>
+                        </ul>
+
+                        <div class="phase-header">Digital Currency Launch</div>
+                        <ul class="milestone-list">
+                            <li><strong>SpaceGold Reserve (SGR):</strong> Blockchain-based token, 1 SGR = 1 gram space gold</li>
+                            <li><strong>Full backing:</strong> Every token backed by physical gold in our lunar/Earth vaults</li>
+                            <li><strong>Instant verification:</strong> Smart contracts prove reserves in real-time</li>
+                            <li><strong>Network effect:</strong> As adoption grows, SGR competes directly with fiat currencies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="year-label">Phase 3: Dominance (Years 8-15)</div>
+                        
+                        <p style="margin-bottom: 20px;"><strong>Becoming the Central Bank of the Gold Standard</strong></p>
+                        
+                        <div class="phase-header">The Tipping Point</div>
+                        <ul class="milestone-list">
+                            <li><strong>Year 8-10:</strong> 15-20 nations using partial gold backing from our supply</li>
+                            <li><strong>Major economy pivot:</strong> One G20 nation adopts (likely Japan, Switzerland, or Singapore)</li>
+                            <li><strong>Currency competition:</strong> Countries realize: gold-backed currencies outperform pure fiat</li>
+                            <li><strong>Rush to gold:</strong> Central banks scramble to increase reserves—but we control new supply</li>
+                        </ul>
+
+                        <div class="phase-header">Our Power Position</div>
+                        <ul class="milestone-list">
+                            <li><strong>Supply monopoly:</strong> Producing 1,000-2,000 tons gold/year (vs. 3,000 tons terrestrial mining)</li>
+                            <li><strong>Pricing authority:</strong> We set "official monetary gold price" at premium to commodity price</li>
+                            <li><strong>Contract leverage:</strong> 50-year supply agreements with 30-50 nations</li>
+                            <li><strong>Veto power:</strong> Nations need our approval to increase monetary gold reserves</li>
+                        </ul>
+
+                        <div class="phase-header">Revenue Streams</div>
+                        <ul class="milestone-list">
+                            <li><strong>Direct sales:</strong> £50-100B/year selling gold to central banks at monetary premium</li>
+                            <li><strong>Management fees:</strong> £10-30B/year managing reserves for smaller nations</li>
+                            <li><strong>SGR transaction fees:</strong> £5-20B/year as digital currency usage grows</li>
+                            <li><strong>Interest on deposits:</strong> Central banks deposit gold with us, we pay interest, use for lending</li>
+                        </ul>
+
+                        <p style="margin-top: 20px; padding: 15px; background: rgba(201,162,39,0.1); border-left: 4px solid #c9a227;">
+                            <strong>The Ultimate Position:</strong> We're not just wealthy—we're the Federal Reserve of a new monetary system. 
+                            We control gold supply = we control monetary policy for 30-50% of global economy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <section id="risks">
+            <h2>Risk Analysis & Mitigation</h2>
+            
+            <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px; color: #a0a0a0;">
+                Every historic moonshot faces existential risks. Here's how we manage them.
+            </p>
+
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-title">⚠️ Technical Failure</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 25%;"></div></div>
+                        <span class="risk-value">25%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> Spacecraft fails, asteroid capture fails, processing doesn't work</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>Launch 2 spacecraft (primary + backup)</li>
+                        <li>Redundant systems on everything</li>
+                        <li>£10B insurance coverage</li>
+                        <li>Test all systems with meteorites first</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Impact if occurs:</strong> 2-3 year delay, £10-15B additional cost. Project survives.</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">💰 Market Collapse</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 30%;"></div></div>
+                        <span class="risk-value">30%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> PGM/gold prices crash before we reach market</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>Diversified metals (not just gold)</li>
+                        <li>Pre-sold supply contracts (lock in pricing)</li>
+                        <li>Strategic metals demand is structural</li>
+                        <li>We control release rate (don't flood market)</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #FFC107;"><strong>Impact if occurs:</strong> Revenue reduced 30-40%, still profitable. ROI drops from 40x to 15-20x.</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">⚖️ Legal/Political</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 20%;"></div></div>
+                        <span class="risk-value">20%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> International treaty bans space mining, asteroids declared "common heritage"</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>Operate through friendly jurisdictions (Luxembourg, UAE, US)</li>
+                        <li>Create fait accompli (harder to ban once operational)</li>
+                        <li>£2B lobbying budget influencing space law</li>
+                        <li>Partner with powerful nations (make us untouchable)</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #FFC107;"><strong>Impact if occurs:</strong> May face profit-sharing (30-50% to international fund). Still enormously profitable.</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🌍 Catastrophic Event</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 5%;"></div></div>
+                        <span class="risk-value">0.1%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> Asteroid redirect error causes Earth impact</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>Redirect to lunar orbit (not Earth orbit)</li>
+                        <li>Triple-redundant navigation systems</li>
+                        <li>International monitoring (NASA, ESA, CNSA)</li>
+                        <li>Abort capability at every stage</li>
+                        <li>Conservative margins (10x safety factor)</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #F44336;"><strong>Impact if occurs:</strong> Existential disaster. Cannot occur. This is THE constraint.</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🏆 Competition</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 40%;"></div></div>
+                        <span class="risk-value">40%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> SpaceX, China, other billionaires enter market</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>5-year head start (by time they start, we're producing)</li>
+                        <li>Best targets already claimed legally</li>
+                        <li>Learning curve advantage (costs declining)</li>
+                        <li>Supply contracts lock in customers</li>
+                        <li>Can acquire competitors (or partner)</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Impact if occurs:</strong> Market share dilution, but market is huge. Reduces margins 20-30%, still extremely profitable.</p>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">🏛️ Monetary Rejection</div>
+                    <div class="risk-meter">
+                        <span class="risk-label">Probability:</span>
+                        <div class="risk-bar"><div class="risk-fill" style="width: 50%;"></div></div>
+                        <span class="risk-value">50%</span>
+                    </div>
+                    <p style="margin: 15px 0;"><strong>Risk:</strong> Central banks reject gold remonetization, stick with fiat</p>
+                    <p><strong>Mitigation:</strong></p>
+                    <ul class="milestone-list">
+                        <li>Project profitable without monetary play</li>
+                        <li>PGM/strategic metal revenue alone = £100-150B/year</li>
+                        <li>Remonetization is upside, not requirement</li>
+                        <li>Can force issue through market (SGR adoption)</li>
+                    </ul>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Impact if occurs:</strong> Still achieve 15-25x ROI. Monetary play is the moonshot within the moonshot.</p>
+                </div>
+            </div>
+
+            <div class="strategy-box" style="margin-top: 50px;">
+                <h3 style="margin-top: 0;">Why This Succeeds Despite Risks</h3>
+                <p style="font-size: 1.15em; line-height: 1.8;">
+                    <strong>1. Redundancy everywhere:</strong> Two spacecraft, multiple processing methods, diversified revenue streams<br><br>
+                    <strong>2. Conservative technical approach:</strong> We're not inventing new physics—just engineering at scale<br><br>
+                    <strong>3. Market timing:</strong> PGM demand structural (fuel cells, hydrogen economy), strategic metals critical (batteries, renewables)<br><br>
+                    <strong>4. Multiple win conditions:</strong> Profitable as pure mining play, transformative with monetary success<br><br>
+                    <strong>5. First-mover insurmountable:</strong> 5-year head start = 10+ year lead by time production scales
+                </p>
+            </div>
+        </section>
+
+        <section id="competitive-advantage">
+            <h2>Why We Win: The Insurmountable Moat</h2>
+            
+            <div class="resource-grid">
+                <div class="resource-card" style="border-left-color: #c9a227;">
+                    <div class="resource-title">⏱️ Time Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        By the time competitors launch their first survey satellite, we'll be <strong>processing our first asteroid</strong>.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>5-year development cycle (vs. industry standard 12-15 years)</li>
+                        <li>While they're fundraising, we're producing revenue</li>
+                        <li>While they're testing, we're signing supply contracts</li>
+                        <li>By Year 10, we have 5+ asteroids while they have zero</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card" style="border-left-color: #e0a829;">
+                    <div class="resource-title">💰 Capital Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        £50 billion committed capital. No one else can match this.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>SpaceX: focused on Mars, not mining</li>
+                        <li>Blue Origin: suborbital tourism, not deep space</li>
+                        <li>China: government program = slow, bureaucratic</li>
+                        <li>Other billionaires: can't commit £50B to 5-year payback</li>
+                        <li>Public companies: shareholders won't wait 5 years</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card" style="border-left-color: #4CAF50;">
+                    <div class="resource-title">🎯 Target Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        We've surveyed and legally claimed the <strong>best asteroids</strong>. They're gone.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>Year 2: Survey identifies top 50 targets, we file claims</li>
+                        <li>Work through Luxembourg/UAE law (first-come rights)</li>
+                        <li>High-value, accessible asteroids are limited resource</li>
+                        <li>Competitors left with worse targets = higher costs, lower returns</li>
+                        <li>We own the "oil fields" of space</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card" style="border-left-color: #2196F3;">
+                    <div class="resource-title">🤝 Partnership Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        By Year 5, we have <strong>supply contracts</strong> locking in customers for decades.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>Automotive industry: 50-year PGM supply agreements</li>
+                        <li>Battery manufacturers: locked cobalt/nickel supply</li>
+                        <li>Central banks: gold supply contracts (if monetary play works)</li>
+                        <li>Competitors can't break in—we own the relationships</li>
+                        <li>Vertical integration: own entire value chain</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card" style="border-left-color: #9C27B0;">
+                    <div class="resource-title">🧠 Knowledge Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        Learning curve is <strong>years ahead</strong>. We've solved problems they haven't encountered.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>Asteroid capture techniques (years of trial-and-error)</li>
+                        <li>Orbital processing optimization (proprietary methods)</li>
+                        <li>Supply chain logistics (Earth-lunar-space)</li>
+                        <li>Regulatory navigation (we wrote the playbook)</li>
+                        <li>1,000+ patents blocking competitor entry</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card" style="border-left-color: #FF5722;">
+                    <div class="resource-title">💪 Scale Advantage</div>
+                    <p style="margin: 15px 0; font-size: 1.1em;">
+                        By Year 10, our <strong>cost per ton</strong> is 1/10th of competitors.
+                    </p>
+                    <ul class="milestone-list">
+                        <li>Processing 3 asteroids simultaneously = fixed cost leverage</li>
+                        <li>Reusable spacecraft amortized over multiple missions</li>
+                        <li>Orbital infrastructure built = marginal cost collapses</li>
+                        <li>New entrants face peak costs, we're at trough</li>
+                        <li>Can undercut competitors while maintaining 70% margins</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="strategy-box" style="margin-top: 50px; background: linear-gradient(135deg, #c9a227 0%, #e0a829 100%); color: #0a0a0a;">
+                <h3 style="margin-top: 0; color: #0a0a0a;">The Ultimate Moat: Network Effects</h3>
+                <p style="font-size: 1.2em; line-height: 1.8; color: #1a1a1a;">
+                    <strong>Year 5:</strong> We're the only supplier → customers depend on us<br>
+                    <strong>Year 8:</strong> Our gold backs 15 currencies → nations depend on us<br>
+                    <strong>Year 12:</strong> 40% of global PGM supply from us → industries depend on us<br>
+                    <strong>Year 15:</strong> We're systemically important → governments protect us<br><br>
+                    <span style="font-size: 1.3em;">
+                        We're not just a company. We're <strong>infrastructure</strong>. Too big to fail, too valuable to regulate away.
+                    </span>
+                </p>
+            </div>
+        </section>
+
+        <section id="why-now">
+            <h2>Why This Works Now (And Not Before)</h2>
+            
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">🚀 Technology Ready</h4>
+                    <p><strong>SpaceX revolutionized costs:</strong> Launch costs down 90% (Falcon Heavy/Starship)</p>
+                    <p><strong>Robotics matured:</strong> Autonomous systems can operate for years without human intervention</p>
+                    <p><strong>AI/ML:</strong> Navigation, processing optimization, real-time decision-making</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> What cost £500B in 2000 now costs £50B</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">💰 Capital Available</h4>
+                    <p><strong>Billionaire wealth explosion:</strong> 10+ individuals with £100B+ net worth</p>
+                    <p><strong>Sovereign wealth funds:</strong> £8+ trillion seeking moonshot returns</p>
+                    <p><strong>Negative real rates:</strong> Traditional investments yielding nothing</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> £50B investment is suddenly feasible for private entity</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">🌍 Demand Surging</h4>
+                    <p><strong>PGMs:</strong> Hydrogen economy, fuel cells = structural demand growth</p>
+                    <p><strong>Battery metals:</strong> EV revolution needs 10x more cobalt/nickel</p>
+                    <p><strong>Rare earths:</strong> China monopoly = desperate demand for alternatives</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> Guaranteed customers at premium prices</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">🏛️ Monetary Crisis</h4>
+                    <p><strong>Fiat fatigue:</strong> 50 years post-gold standard = growing skepticism</p>
+                    <p><strong>Inflation fears:</strong> Central bank money printing = currency debasement concerns</p>
+                    <p><strong>Crypto showed demand:</strong> People want alternative to fiat (but crypto failed)</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> Perfect timing for gold remonetization pitch</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">⚖️ Legal Clarity</h4>
+                    <p><strong>Luxembourg, UAE, US:</strong> Laws now explicitly allow space resource extraction</p>
+                    <p><strong>Precedent set:</strong> Outer Space Treaty doesn't prohibit private mining</p>
+                    <p><strong>First-mover advantage:</strong> No international consensus = favorable window</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> Operate legally before opposition organizes</p>
+                </div>
+
+                <div class="resource-card">
+                    <h4 style="color: #c9a227; margin-bottom: 15px;">🎯 Competition Absent</h4>
+                    <p><strong>SpaceX:</strong> Focused on Mars colonization, not mining</p>
+                    <p><strong>Blue Origin:</strong> Still working on orbital capability</p>
+                    <p><strong>Governments:</strong> Fragmented, slow, underfunded</p>
+                    <p style="margin-top: 15px; color: #4CAF50;"><strong>Result:</strong> 3-5 year window where no serious competition exists</p>
+                </div>
+            </div>
+
+            <div class="strategy-box" style="margin-top: 50px;">
+                <h3 style="margin-top: 0; text-align: center;">The Convergence</h3>
+                <p style="font-size: 1.3em; text-align: center; line-height: 1.8; margin: 30px 0;">
+                    For the first time in history, <span class="accent-text">all pieces are in place simultaneously</span>:<br><br>
+                    Technology + Capital + Demand + Legal Framework + Monetary Crisis + No Competition<br><br>
+                    <strong style="color: #c9a227; font-size: 1.2em;">This window won't last. We move now, or someone else will.</strong>
+                </p>
+            </div>
+        </section>
+
+        <section id="execution">
+            <h2>Execution Philosophy: How We Compress 15 Years Into 5</h2>
+            
+            <div class="strategy-box">
+                <h3 style="margin-top: 0;">The Blitzkrieg Approach</h3>
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    Traditional space programs fail because they're <strong>sequential</strong> and <strong>risk-averse</strong>. 
+                    We succeed by being <strong>parallel</strong> and <strong>aggressive</strong>.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0;">
+                    <div style="padding: 20px; background: rgba(255,255,255,0.05); border-left: 4px solid #F44336;">
+                        <h4 style="color: #F44336; margin-bottom: 15px;">❌ Traditional Approach</h4>
+                        <ul class="milestone-list">
+                            <li>Sequential: design → test → build → launch</li>
+                            <li>Risk-averse: years of review, committee approvals</li>
+                            <li>Cost-optimized: cheapest contractor wins</li>
+                            <li>Bureaucratic: government oversight, political interference</li>
+                            <li>Conservative: proven technology only</li>
+                        </ul>
+                        <p style="margin-top: 20px; color: #F44336;"><strong>Timeline: 12-15 years</strong></p>
+                    </div>
+
+                    <div style="padding: 20px; background: rgba(201,162,39,0.1); border-left: 4px solid #4CAF50;">
+                        <h4 style="color: #4CAF50; margin-bottom: 15px;">✓ Our Approach</h4>
+                        <ul class="milestone-list">
+                            <li>Parallel: 8 teams working simultaneously on different systems</li>
+                            <li>Risk-tolerant: build 2 of everything, expect failures</li>
+                            <li>Speed-optimized: pay 5x for fastest execution</li>
+                            <li>Private: no committees, decisions in hours not months</li>
+                            <li>Aggressive: push boundaries, iterate rapidly</li>
+                        </ul>
+                        <p style="margin-top: 20px; color: #4CAF50;"><strong>Timeline: 5 years</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 60px;">10 Principles of Hyper-Execution</h3>
+            
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <div class="resource-title">1. Parallel Everything</div>
+                    <p>Don't wait for Phase A to complete before starting Phase B. Run 8 mission tracks simultaneously:</p>
+                    <ul class="milestone-list">
+                        <li>Spacecraft design (2 competing teams)</li>
+                        <li>Processing tech (3 different approaches)</li>
+                        <li>Survey operations (ongoing)</li>
+                        <li>Infrastructure build (spaceports, facilities)</li>
+                        <li>Legal/regulatory (continuous lobbying)</li>
+                        <li>Talent recruitment (never stops)</li>
+                        <li>Financial positioning (gold accumulation)</li>
+                        <li>Partnership development (suppliers, customers)</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">2. Redundancy is Cheap</div>
+                    <p>Failure is expensive in time, not money. Build 2 of everything critical:</p>
+                    <ul class="milestone-list">
+                        <li>2 capture spacecraft (launch both)</li>
+                        <li>2 processing methods (thermal + chemical)</li>
+                        <li>2 return capsule designs</li>
+                        <li>2 spaceports (different continents)</li>
+                        <li>Cost: +30%. Time saved: 2-3 years if primary fails.</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">3. Pay for Speed</div>
+                    <p>Offer irresistible compensation to compress timelines:</p>
+                    <ul class="milestone-list">
+                        <li>Engineers: 5x market salary + equity</li>
+                        <li>Suppliers: 50% premium for priority delivery</li>
+                        <li>Launch providers: premium for rapid booking</li>
+                        <li>Example: Pay SpaceX £500M extra to jump queue = saves 1 year</li>
+                        <li>Time is more valuable than money at this scale</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">4. Compete Internally</div>
+                    <p>Set up competing teams for critical systems:</p>
+                    <ul class="milestone-list">
+                        <li>Team A and Team B both design capture spacecraft</li>
+                        <li>Give both £1B budget, 18-month deadline</li>
+                        <li>Best design wins, build that one</li>
+                        <li>Losing team joins winning team for production</li>
+                        <li>Competition ensures best solution + backup if one fails</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">5. Test with Real Materials</div>
+                    <p>Don't just simulate—test with actual asteroids:</p>
+                    <ul class="milestone-list">
+                        <li>Buy 50 tons of meteorites (£5-10M)</li>
+                        <li>Build ground processing facility Year 1</li>
+                        <li>Test every extraction method on real material</li>
+                        <li>Know what works before we're in space</li>
+                        <li>NASA spends years simulating. We test real.</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">6. Vertical Integration</div>
+                    <p>Control entire supply chain—don't depend on others:</p>
+                    <ul class="milestone-list">
+                        <li>Own spaceports (don't rent)</li>
+                        <li>Own processing facilities (don't partner)</li>
+                        <li>Own launch capability eventually (acquire/invest)</li>
+                        <li>Own distribution (direct to customers)</li>
+                        <li>Dependencies kill speed—eliminate them</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">7. Regulatory Offense</div>
+                    <p>Shape the rules rather than wait for them:</p>
+                    <ul class="milestone-list">
+                        <li>Fund legal scholars writing favorable papers</li>
+                        <li>Draft model legislation for friendly governments</li>
+                        <li>Create precedents through early operations</li>
+                        <li>£2B lobbying budget (vs. competitors' £0)</li>
+                        <li>By time opposition organizes, we're operational</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">8. Fail Fast & Forward</div>
+                    <p>Expect failures, recover quickly:</p>
+                    <ul class="milestone-list">
+                        <li>Budget assumes 30% failure rate on first attempts</li>
+                        <li>Post-mortems in 24 hours, not months</li>
+                        <li>Pivot immediately when something doesn't work</li>
+                        <li>Example: Processing method fails → switch to backup within weeks</li>
+                        <li>Speed of recovery matters more than avoiding failure</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">9. Acquire vs. Build</div>
+                    <p>If someone has what we need, buy it:</p>
+                    <ul class="milestone-list">
+                        <li>Robotics company has perfect arm? Buy it (£500M)</li>
+                        <li>Startup solved capture problem? Acquire (£100M)</li>
+                        <li>Mining company has expertise? Buy 40% (£2B)</li>
+                        <li>Launch provider capacity? Invest/acquire</li>
+                        <li>Building takes years. Acquisition takes months.</li>
+                    </ul>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-title">10. Decision Velocity</div>
+                    <p>Compress decision cycles to hours, not months:</p>
+                    <ul class="milestone-list">
+                        <li>Founder/CEO has unilateral authority up to £1B</li>
+                        <li>No committees, no bureaucracy, no consensus</li>
+                        <li>Weekly executive meetings: 100 decisions/hour</li>
+                        <li>Wrong fast > right slow (we have capital to correct)</li>
+                        <li>Most valuable resource is time, not money</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>The Opportunity of the Millennium</h2>
+                <p class="cta-text">
+                    This is not about building a company. This is about <strong>reshaping civilization</strong>.<br>
+                    Control resources + control money = control destiny.
+                </p>
+                
+                <div style="background: rgba(0,0,0,0.3); padding: 40px; border-radius: 15px; margin: 40px 0;">
+                    <h3 style="color: #0a0a0a; margin-bottom: 30px;">The Numbers</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px;">
+                        <div>
+                            <div style="font-size: 2.5em; color: #0a0a0a; font-weight: bold;">5 Years</div>
+                            <div style="color: #1a1a1a;">To first production & market dominance</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2.5em; color: #0a0a0a; font-weight: bold;">£50B</div>
+                            <div style="color: #1a1a1a;">Total investment required</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2.5em; color: #0a0a0a; font-weight: bold;">40-160x</div>
+                            <div style="color: #1a1a1a;">Projected return on investment</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 2.5em; color: #0a0a0a; font-weight: bold;">£5-8T</div>
+                            <div style="color: #1a1a1a;">Enterprise value if monetary play succeeds</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 50px 0;">
+                    <h3 style="color: #0a0a0a; margin-bottom: 20px;">What This Unlocks</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 10px;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🏛️</div>
+                            <strong style="color: #0a0a0a;">Monetary Control</strong><br>
+                            <span style="color: #1a1a1a;">Become central bank of new gold standard</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 10px;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🌍</div>
+                            <strong style="color: #0a0a0a;">Geopolitical Power</strong><br>
+                            <span style="color: #1a1a1a;">Supply nations with strategic resources</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 10px;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🚀</div>
+                            <strong style="color: #0a0a0a;">Space Dominance</strong><br>
+                            <span style="color: #1a1a1a;">Control orbital infrastructure & resources</span>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 10px;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">📚</div>
+                            <strong style="color: #0a0a0a;">Historical Legacy</strong><br>
+                            <span style="color: #1a1a1a;">Name in history alongside Rockefeller, Rothschild</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="font-size: 1.4em; margin: 40px 0; color: #0a0a0a; line-height: 1.8;">
+                    <strong>This is the play.</strong><br>
+                    5 years to production. 10 years to dominance. 15 years to monetary restructuring.<br>
+                    By Year 20, you're not just wealthy—you're <strong>systemically important</strong>.<br><br>
+                    The window is now. The technology exists. The capital exists. The demand exists.<br>
+                    <strong>Move first, or watch someone else reshape civilization.</strong>
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p style="margin-bottom: 20px; font-size: 1.1em;">
+                    <strong>PROJECT AURUM</strong> — Speculative business proposal for asteroid mining & monetary restructuring
+                </p>
+                <p style="font-size: 0.9em; color: #666; line-height: 1.6;">
+                    This document represents a hypothetical strategic framework for asteroid resource extraction and its potential 
+                    implications for global monetary systems. All figures, timelines, and projections are speculative and based on 
+                    current technological capabilities and market conditions. Actual execution would require extensive technical validation, 
+                    regulatory approval, international cooperation, and risk management far beyond the scope of this conceptual overview.
+                </p>
+                <p style="margin-top: 30px; color: #c9a227;">
+                    "The future belongs to those who see possibilities before they become obvious."
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for any internal links (if you add a nav later)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Animate risk meters on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.risk-fill');
+                    fills.forEach(fill => {
+                        fill.style.width = fill.style.width; // Trigger animation
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.resource-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add parallax effect to header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (header && scrolled < 500) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+                header.style.opacity = 1 - (scrolled / 500);
+            }
+        });
+    </script>
+</body>
+</html>
